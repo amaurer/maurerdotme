@@ -1,7 +1,5 @@
 div#wrapper!= partial('partials/header.jade')
 	p Hello! I am testing some crap
 	div#articleList
-		div.article
-			div.title!= article.title
-			div.created!= article.createdDateTime
-			div.body!= article.body
+		- each article, art in articles
+			div.article!= article.body

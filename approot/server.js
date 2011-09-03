@@ -1,7 +1,7 @@
 
 var express = require('express');
 var app = express.createServer();
-var articles = require('./model/articles.js'),
+var articles = require('./model/articles.js').init('./articles/'),
 	flickr = require('./model/flickr.js'),
 	twitter = require('./model/twitter.js');
 
@@ -19,7 +19,7 @@ var articles = require('./model/articles.js'),
 		res.render('index.jade', {
 			layout : 'layouts/single_col_full.jade',
 			title : 'Is cool',
-			article : articles.getArticleList()[0]
+			articles : articles.getArticleList()
 		});
 	});
 	app.get('/articles/', function(req, res){

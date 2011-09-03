@@ -42,6 +42,8 @@ exports.init = function(articleDirectory){
 		return returnMetaObject;
 	};
 
+	return this;
+
 };
 
 exports.getArticleList = function(){
