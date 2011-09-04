@@ -1,7 +1,7 @@
 
 var express = require('express');
 var app = express.createServer();
-var articles = require('./model/articles.js').init('./articles/'),
+var articles = require('./model/articles.js').init('./articles/', 'md'),
 	flickr = require('./model/flickr.js'),
 	twitter = require('./model/twitter.js');
 
@@ -16,26 +16,33 @@ var articles = require('./model/articles.js').init('./articles/'),
 	});
 
 	app.get('/', function(req, res){
-		res.render('index.jade', {
+		res.render('index', {
 			layout : 'layouts/single_col_full.jade',
 			title : 'Is cool',
-			articles : articles.getArticleList()
+			articles : articles.getArticles('title', false)
+		});
+	});
+	app.get('/articles/:articleTitle/:articleID', function(req, res){
+		res.render('articleDetails', {
+			layout : 'layouts/single_col_full.jade',
+			title : 'Is cool',
+			article : articles.getArticleByID(req.params.articleID)
 		});
 	});
 	app.get('/articles/', function(req, res){
-		res.render('article.jade', {
+		res.render('article', {
 			layout : 'layouts/single_col_full.jade',
 			title : 'Is cool'
 		});
 	});
 	app.get('/profile/', function(req, res){
-		res.render('profile.jade', {
+		res.render('profile', {
 			layout : 'layouts/single_col_full.jade',
 			title : 'Is cool'
 		});
 	});
 	app.get('/pics/', function(req, res){
-		res.render('pics.jade', {
+		res.render('pics', {
 			layout : 'layouts/single_col_full.jade',
 			title : 'Is cool'
 		});

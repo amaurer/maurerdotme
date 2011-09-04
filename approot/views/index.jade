@@ -1,5 +1,7 @@
 div#wrapper!= partial('partials/header.jade')
 	p Hello! I am testing some crap
 	div#articleList
-		- each article, art in articles
-			div.article!= article.body
+		ul.articles
+			- each article, art in articles
+				li.article
+					a(href='/articles/' + article.title.toLowerCase().replace(/\W/g, '-') + '/' + article.uid + '/')!= article.title

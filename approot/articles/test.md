@@ -3,6 +3,8 @@ title=Starting out with Markdown
 shortTitle=Markdown Intro
 summary=What I've learned about using Markdown in Nodejs
 createdDateTime=555
+author=Andrew Maurer
+uid=123
 */
 
 

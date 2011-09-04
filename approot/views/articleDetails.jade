@@ -1,0 +1,8 @@
+div#wrapper!= partial('partials/header.jade')
+	h2 This is Article Details
+	div#articleDetail
+		div.title!= article.title
+		div.author!= article.author
+		div.summary!= article.summary
+		div.createdDateTime!= article.createdDateTime
+		div.article!= article.body
