@@ -4,6 +4,10 @@ var articles = [];
 var nmd = require('node-markdown').Markdown;
 var fs = require('fs');
 
+/* TODO add option to save articles in memory or dont *this relies on the user not being able to search the content
+
+*/
+
 exports.init = function(articleDirectory, fileExtension){
 
 	fs.readdir(articleDirectory, function(err, files) {
@@ -144,4 +148,4 @@ function Article(){
 	if(typeof this.body === 'undefined') this.body = '';
 	if(typeof this.createdDateTime === 'undefined') this.createdDateTime = new Date();
 };
- 
+  

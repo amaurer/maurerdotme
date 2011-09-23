@@ -1,7 +1,19 @@
-div#wrapper!= partial('partials/header.jade')
-	p Hello! I am testing some crap
-	div#articleList
-		ul.articles
-			- each article, art in articles
-				li.article
-					a(href='/articles/' + article.title.toLowerCase().replace(/\W/g, '-') + '/' + article.uid + '/')!= article.title
+div#wrapper!= partial('partials/header')
+
+	p I am testing some crap
+
+	div#wrapper
+
+		div#articlesSummary!= partial('partials/articleListSummary')
+
+		div#flickrWall
+			ul
+				li.flickrImg
+					img
+		
+		a(href="http://coderwall.com/amaurer") Test
+
+		div#twitter
+			ul
+				li.tweet
+					a(href="") tests

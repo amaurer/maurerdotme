@@ -8,7 +8,7 @@ uid=1234
 */
 
 
-Starting out with Markdown2!
+Markdown test 2!
 -------------
 
 Once upon a time I tried Markdown, and it was sweet. I could write articles in code (sorta) without worrying about formatting elements
