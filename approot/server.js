@@ -19,68 +19,14 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 		res.render('index', {
 			layout : 'layouts/single_col_full',
 			title : 'Is cool',
-			articles : articles.getArticles('title', true),
-			flickr : {
-				photos : flickr.getTopPhotos(),
-				tags : flickr.getTags()
-			}
+			articles : articles.getArticles('title', true)
 		});
 	});
-	app.get('/articles/:articleTitle/:articleID', function(req, res){
-		var articles = articles.getArticleByID(req.params.articleID);
-		// Get title data? */
-		res.render('articleDetails', {
-			layout : 'layouts/single_col_full',
-			title : 'Is cool',
-			article : articles.getArticleByID(req.params.articleID)
-		});
-	});
-	app.get('/articles', function(req, res){
-		res.render('articles', {
-			layout : 'layouts/single_col_full',
-			title : 'Is cool'
-		});
-	});
-	app.get('/profile', function(req, res){
-		res.render('profile', {
-			layout : 'layouts/single_col_full',
-			title : 'Is cool'
-		});
-	});
-	app.get('/pics', function(req, res){
-		flickr.photos.search('', function(e, photos){
-			var count = 0;
-			for(var n in photos) count++;
-			console.log(count);
-			res.send('done');
-		});
-		/*
-		res.render('pics', {
-			layout : 'layouts/single_col_full',
-			title : 'Is cool',
-			flickr : {
-				photos : flickr.getPhotos(),
-				tags : flickr.getTags()
-			}
-		});
-		*/
-	});
-	app.get('/photos/:photoTitle/:photoID', function(req, res){
-		flickr.photos.search('', function(){
-			//console.log(arguments);
-			res.send('don');
-		});
-
-		/*
-		res.render('pics', {
-			layout : 'layouts/single_col_full',
-			title : 'Is cool',
-			flickr : {
-				photo : flickr.photos.getPhotoById(req.params.photoID)
-			}
-		});
-		*/
-	});
+	
+	/* Include the Controllers */
+	require('./controllers/articles.js').init(app, articles);
+	require('./controllers/photos.js').init(app, flickr);
+	require('./controllers/profile.js').init(app);
 
 	app.listen(3000);
 	   

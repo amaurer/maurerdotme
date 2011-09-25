@@ -1,5 +1,6 @@
 
 var request = require('request');
+var async = require('async');
 
 var base_url = 'http://flickr.com/services/rest/?';
 var api_key = '';
@@ -18,28 +19,20 @@ text=&
 sort=date-taken-desc
 */
 
-function getBaseURL(method){
-
-	var a = [
-		'api_key=' + api_key,
-		'user_id=' + user_id,
-		'format=' + format,
-		'method=' + method
-	];
-	return base_url + a.join('&');
-
-};
-
-function RequestObject(){
-
+function RequestObject(rn, rp){
+	this.requestName = rn || '';
+	this.requestParams = rp || {};
+	return this;
 }
 
 function requestInterface(options, callback){
+
 	if(typeof saved_requests[options.requestName] !== 'undefined'){
 		if(callback) callback.call(this, null, saved_requests[options.requestName]);
 		return true;
 	};
-	request(options.requestURL, function(e, r, d){
+
+	request(getBaseURL(options.requestName, options.requestParams), function(e, r, d){
 		if(e && callback) callback.call(this, d)
 		else if (e) throw e;
 		eval(d); // Is Evil ?
@@ -48,44 +41,48 @@ function requestInterface(options, callback){
 			if(callback) callback.call(this, null, dd);
 		}
 	});
+
+	function getBaseURL(method, paramsObject){
+		var a = [
+			'api_key=' + api_key,
+			'user_id=' + user_id,
+			'format=' + format,
+			'method=' + method
+		];
+		for(var n in paramsObject){
+			if(paramsObject[n]) a.push(n + '=' + paramsObject[n]); // Add if value is not null
+		};
+		return base_url + a.join('&');
+	};
+
+};
+
+function inParallel(arrayOfCalls, callback){
+	async.parallel(arrayOfCalls, callback);
 };
 
 var api = {
 
 	photos : {
-		search : function(sortOrder, callback){
-			if(sort)
-			var sortO = sortOrder || 'date-taken-desc';
-			if(typeof saved_requests['photos.search'] !== 'undefined'){
-				if(callback) callback.call(this, null, saved_requests['photos.search']);
-				return true;
+		search : function(params, callback){
+			var options = {
+				sort : 'date-taken-desc',
+				tags : null,
+				text : null
 			};
-			request(getBaseURL('flickr.photos.search') + '&sort=' + sortO, function(e, r, d){
-				if(e && callback) callback.call(this, d)
-				else if (e) throw e;
-				eval(d); // Is Evil ?
-				function jsonFlickrApi(dd){
-					saved_requests['photos.search'] = dd.photos.photo;
-					if(callback) callback.call(this, null, dd.photos.photo);
-				}
-			});
+			if(typeof params === 'function'){ // If user just wants default params
+				callback = params;
+			} else {
+				for(var n in options){
+					if(typeof params[n] !== undefined) options[n] = params[n];
+				};
+			}
+			requestInterface(new RequestObject('flickr.photos.search', options), callback);
 		}
 	},
 	tags : {
 		getListUserPopular : function(callback){
-			if(typeof saved_requests['flickr.tags.getListUserPopular'] !== 'undefined'){
-				if(callback) callback.call(this, null, saved_requests['photos.search']);
-				return true;
-			};
-			request(getBaseURL('tags.getListUserPopular'), function(e, r, d){
-				if(e && callback) callback.call(this, d)
-				else if (e) throw e;
-				eval(d); // Is Evil ?
-				function jsonFlickrApi(dd){
-					saved_requests['tags.getListUserPopular'] = dd.tags;
-					if(callback) callback.call(this, null, dd.tags);
-				}
-			});
+			requestInterface(new RequestObject('flickr.tags.getListUserPopular'), callback);
 		}
 	}
 
@@ -98,6 +95,8 @@ exports.init = function(apiKey, userID, requestFormat){
 	user_id = userID || '';
 	format = requestFormat || 'json';
 	saved_requests = {};
+
+	api.inParallel = inParallel;
 
 	return api;
 };

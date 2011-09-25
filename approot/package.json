@@ -5,6 +5,7 @@
 		"express" : "latest",
 		"jade" : "latest",
 		"node-markdown" : "latest",
-		"request" : "latest"
+		"request" : "latest",
+		"async" : "latest"
 	}
 }
