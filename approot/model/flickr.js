@@ -8,16 +8,6 @@ var user_id = '';
 var format = 'json';
 var saved_requests = {
 };
-/*
-http://flickr.com/services/rest/?
-api_key=88adb0866be21dff0d9ccd21706360e1&
-user_id=58050551@N04&
-format=json&
-jsoncallback=jsonp1316715760979&
-method=photos.search&
-text=&
-sort=date-taken-desc
-*/
 
 function RequestObject(rn, rp){
 	this.requestName = rn || '';
@@ -27,22 +17,24 @@ function RequestObject(rn, rp){
 
 function requestInterface(options, callback){
 
-	if(typeof saved_requests[options.requestName] !== 'undefined'){
-		if(callback) callback.call(this, null, saved_requests[options.requestName]);
+	var params = getParamsURL(options.requestName, options.requestParams);
+
+	if(typeof saved_requests[params] !== 'undefined'){
+		if(callback) callback.call(this, null, saved_requests[params]);
 		return true;
 	};
 
-	request(getBaseURL(options.requestName, options.requestParams), function(e, r, d){
+	request(base_url + params, function(e, r, d){
 		if(e && callback) callback.call(this, d)
 		else if (e) throw e;
 		eval(d); // Is Evil ?
 		function jsonFlickrApi(dd){
-			saved_requests[options.requestName] = dd;
+			saved_requests[params] = dd;
 			if(callback) callback.call(this, null, dd);
 		}
 	});
 
-	function getBaseURL(method, paramsObject){
+	function getParamsURL(method, paramsObject){
 		var a = [
 			'api_key=' + api_key,
 			'user_id=' + user_id,
@@ -52,13 +44,9 @@ function requestInterface(options, callback){
 		for(var n in paramsObject){
 			if(paramsObject[n]) a.push(n + '=' + paramsObject[n]); // Add if value is not null
 		};
-		return base_url + a.join('&');
+		return a.join('&');
 	};
 
-};
-
-function inParallel(arrayOfCalls, callback){
-	async.parallel(arrayOfCalls, callback);
 };
 
 var api = {
@@ -78,6 +66,9 @@ var api = {
 				};
 			}
 			requestInterface(new RequestObject('flickr.photos.search', options), callback);
+		},
+		getInfo : function(photo_id, callback){
+			requestInterface(new RequestObject('flickr.photos.getInfo', {photo_id : photo_id}), callback);
 		}
 	},
 	tags : {
@@ -88,7 +79,6 @@ var api = {
 
 };
 
-
 exports.init = function(apiKey, userID, requestFormat){
 
 	api_key = apiKey || '';
@@ -96,7 +86,7 @@ exports.init = function(apiKey, userID, requestFormat){
 	format = requestFormat || 'json';
 	saved_requests = {};
 
-	api.inParallel = inParallel;
+	api.inParallel = async.parallel;
 
 	return api;
 };

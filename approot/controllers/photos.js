@@ -32,9 +32,17 @@ exports.init = function(app, flickrModel){
 	});
 	
 	app.get('/photos/:photoTitle/:photoID', function(req, res){
-		flickrModel.photos.search('', function(){
-			//console.log(arguments);
-			res.send('don');
+		flickrModel.photos.getInfo(req.params.photoID, function(e, data){
+			res.send(JSON.stringify(data));
+		});
+	});
+	
+	app.get('/photos/:tags', function(req, res){
+		var options = {
+			tags : req.params.tags
+		};
+		flickrModel.photos.search(options, function(e, data){
+			res.send(JSON.stringify(data));
 		});
 	});
 	
