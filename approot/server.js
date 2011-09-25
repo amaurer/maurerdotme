@@ -1,8 +1,9 @@
 
+var customSettings = require('./customSettings.js');
 var express = require('express');
 var app = express.createServer();
 var articles = require('./model/articles.js').init('./articles/', 'md'),
-	flickr = require('./model/flickr.js').init('88adb0866be21dff0d9ccd21706360e1', '58050551@N04'),
+	flickr = require('./model/flickr.js').init(customSettings.flickr.api_key, customSettings.flickr.user_id),
 	twitter = require('./model/twitter.js');
 
 	app.configure(function(){
