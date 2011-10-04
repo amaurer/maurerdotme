@@ -6,8 +6,7 @@ var base_url = 'http://flickr.com/services/rest/?';
 var api_key = '';
 var user_id = '';
 var format = 'json';
-var saved_requests = {
-};
+var saved_requests = {};
 
 function RequestObject(rn, rp){
 	this.requestName = rn || '';

@@ -19,7 +19,7 @@ var express = require('express');
 var app = express.createServer();
 var articles = require('./model/articles.js').init('./articles/', 'md'),
 	flickr = require('./model/flickr.js').init(customSettings.flickr.api_key, customSettings.flickr.user_id),
-	twitter = require('./model/twitter.js');
+	twitter = require('./model/twitter.js').init(customSettings.twitter.account_name);
 
 	app.configure(function(){
 		app.set('views', __dirname + '/views');
@@ -31,11 +31,17 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
 
+	app.listen(3000);
+
 	app.get('/', function(req, res){
-		res.render('index', {
-			layout : 'layouts/single_col_full',
-			title : 'Is cool',
-			articles : articles.getArticles('title', true)
+		twitter.getLatest(function(data){
+			//tweet.text.replace('/[@]{1}[\w]*?$1/gi', '<a href="http://twitter.com/$1/">$1</a>')
+			res.render('index', {
+				layout : 'layouts/single_col_full',
+				title : 'Is cool',
+				articles : articles.getArticles('title', true),
+				tweets : data.results
+			});
 		});
 	});
 	
@@ -43,6 +49,4 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 	require('./controllers/articles.js').init(app, articles);
 	require('./controllers/photos.js').init(app, flickr);
 	require('./controllers/profile.js').init(app);
-
-	app.listen(3000);
-	   
+   
