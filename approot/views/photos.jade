@@ -1,6 +1,6 @@
 div#photosWrapper
 	ul.photos
-		- each photo, pic in flickr.photos
+		- each photo, pic in flickrData.photos
 			li.photo
 				img(src='http://farm' + photo.farm + '.static.flickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_z.jpg', alt=photo.title)
-	script!=JSON.stringify(flickr.photoCollection)
+	script!=JSON.stringify(flickrData.photoCollection)

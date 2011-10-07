@@ -49,4 +49,5 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 	require('./controllers/articles.js').init(app, articles);
 	require('./controllers/photos.js').init(app, flickr);
 	require('./controllers/profile.js').init(app);
+	require('./controllers/search.js').init(app, articles, flickr);
    

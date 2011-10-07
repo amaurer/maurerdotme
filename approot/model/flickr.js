@@ -18,7 +18,7 @@ function requestInterface(options, callback){
 
 	var params = getParamsURL(options.requestName, options.requestParams);
 
-	if(typeof saved_requests[params] !== 'undefined'){
+	if(saved_requests[params] != null){
 		if(callback) callback.call(this, null, saved_requests[params]);
 		return true;
 	};
@@ -61,7 +61,9 @@ var api = {
 				callback = params;
 			} else {
 				for(var n in options){
-					if(typeof params[n] !== undefined) options[n] = params[n];
+					if(params[n] != null){
+						options[n] = params[n];
+					};
 				};
 			}
 			requestInterface(new RequestObject('flickr.photos.search', options), callback);

@@ -1,3 +1,7 @@
 div#header
 	h1 Andrew Maurer
 		span Sr. Web Developer
+
+	form(action='/search/', method='POST')
+		input(name='search', id='search', type='text')
+		input(id='search-button', type='submit')

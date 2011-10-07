@@ -1,0 +1,5 @@
+div#photosWrapper
+	ul.photos
+		- each photo, pic in flickr.photo
+			li.photo
+				img(src='http://farm' + photo.farm + '.static.flickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_s.jpg', alt=photo.title)

@@ -7,13 +7,15 @@ author=Andrew Maurer
 uid=124
 */
 
-TODO
-============
+#TODO
 
-List
-----------
+##List
 
-
-
-Allow inclusion of scripts into articles
-Figure out how to use images
+- Site Design
+	* Go Over the flow of the site
+	* Decide on a style
+- Articles
+	* Allow inclusion of scripts into articles
+	* Figure out how to use images
+	* Consume article date
+	

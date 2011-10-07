@@ -111,8 +111,8 @@ exports.getArticleByID = function(requestedID){
 	};
 	return new Article();
 };
-exports.searchArticles = function(phrase){
-	var re = Regex(phrase + '*?', 'gi');
+exports.search = function(phrase){
+	var re = RegExp(phrase + '*?', 'gi');
 	/* We can do this better
 	var returnArticles = [];
 	for(var i=0, x='', len = articles.length; i<len; i++){
@@ -122,8 +122,8 @@ exports.searchArticles = function(phrase){
 		};
 	}
 	*/
-	return articles.filter(function(i, x){
-		return (re.find(x.title) !== -1 || re.find(x.body) !== -1);
+	return articles.filter(function(x){
+		return (x.title.search(re) !== -1 || x.body.search(re) !== -1);
 	});
 };
 
