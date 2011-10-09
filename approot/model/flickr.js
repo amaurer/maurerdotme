@@ -1,7 +1,4 @@
-
 var request = require('request');
-var async = require('async');
-
 var base_url = 'http://flickr.com/services/rest/?';
 var api_key = '';
 var user_id = '';
@@ -26,7 +23,8 @@ function requestInterface(options, callback){
 	request(base_url + params, function(e, r, d){
 		if(e && callback) callback.call(this, d)
 		else if (e) throw e;
-		eval(d); // Is Evil ?
+		// Is Evil ?
+		eval(d);
 		function jsonFlickrApi(dd){
 			saved_requests[params] = dd;
 			if(callback) callback.call(this, null, dd);
@@ -41,7 +39,8 @@ function requestInterface(options, callback){
 			'method=' + method
 		];
 		for(var n in paramsObject){
-			if(paramsObject[n]) a.push(n + '=' + paramsObject[n]); // Add if value is not null
+			// Add if value is not null
+			if(paramsObject[n]) a.push(n + '=' + paramsObject[n]);
 		};
 		return a.join('&');
 	};
@@ -86,8 +85,6 @@ exports.init = function(apiKey, userID, requestFormat){
 	user_id = userID || '';
 	format = requestFormat || 'json';
 	saved_requests = {};
-
-	api.inParallel = async.parallel;
 
 	return api;
 };

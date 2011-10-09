@@ -1,7 +1,0 @@
-div#twitterListSummary
-	ul.tweets
-		- each tweet, t in tweets
-			li.tweet
-				a(href='http://twitter.com/' + tweet.from_user + '/')
-					img(src=tweet.profile_image_url, alt=tweet.from_user)
-					#{tweet.text}

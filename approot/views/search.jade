@@ -1,17 +1,7 @@
-div#wrapper!= partial('partials/header')
-
+div#search.page-header
 	p Search Results
+div#searchResults
 
-	div#wrapper
+	include partials/articleListSummary
 
-		div#articlesSummary!= partial('partials/articleListSummary')
-
-		div#photosSummary!= partial('partials/photoSummary')
-
-		div#flickrWall
-			ul
-				li.flickrImg
-					img
-		
-		a(href="http://coderwall.com/amaurer") Test
-
+	include partials/photoListSummary

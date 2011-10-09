@@ -1,6 +1,6 @@
 
 
-exports.init = function(app, articlesModel, flickrModel){
+exports.init = function(app, async, articlesModel, flickrModel){
 
 	app.get('/search/:searchTag', function(req, res){
 		res.send(req.params.searchTag);
@@ -10,6 +10,7 @@ exports.init = function(app, articlesModel, flickrModel){
 		res.render('articleDetails', {
 			layout : 'layouts/single_col_full',
 			title : 'Is cool',
+			photosList : flickrData.photos,
 			article : articlesModel.getArticleByID(req.params.articleID)
 		});
 	});
@@ -30,8 +31,8 @@ exports.init = function(app, articlesModel, flickrModel){
 				layout : 'layouts/single_col_full',
 				title : 'Is cool',
 				searchPhrase : phrase,
-				flickr : flickrData.photos,
-				articles : articleData
+				photosList : flickrData.photos.photo,
+				articlesList : articleData
 			});
 
 		});

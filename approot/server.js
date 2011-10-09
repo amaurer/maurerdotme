@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 var customSettings = require('./customSettings.js');
 var express = require('express');
 var app = express.createServer();
+var async = require('async');
 var articles = require('./model/articles.js').init('./articles/', 'md'),
 	flickr = require('./model/flickr.js').init(customSettings.flickr.api_key, customSettings.flickr.user_id),
 	twitter = require('./model/twitter.js').init(customSettings.twitter.account_name);
@@ -34,20 +35,40 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 	app.listen(3000);
 
 	app.get('/', function(req, res){
-		twitter.getLatest(function(data){
-			//tweet.text.replace('/[@]{1}[\w]*?$1/gi', '<a href="http://twitter.com/$1/">$1</a>')
-			res.render('index', {
-				layout : 'layouts/single_col_full',
-				title : 'Is cool',
-				articles : articles.getArticles('title', true),
-				tweets : data.results
-			});
+		async.parallel({
+				flickrPhotos : function(cb){
+					flickr.photos.search(function(e, data){
+						cb(e, (e)? [] : data.photos.photo);
+					});
+				},
+				twitterLatest : function(cb){
+					twitter.getLatest(function(e, data){
+						cb(e, (e)? [] : data.results);
+					});
+				}
+			},
+			function(e, data){
+				// Loop over results to filter on 10 of them for summary
+				for (var i = 0, a = []; i < data.flickrPhotos.length; i++) {
+					if(a.length <11){
+						a.push(data.flickrPhotos[i]);
+					} else {
+						break;
+					};
+				};
+				res.render('index', {
+					layout : 'layouts/single_col_full',
+					title : 'Is cool',
+					articlesList : articles.getArticles('title', true),
+					tweetsList : data.twitterLatest,
+					photosList : a
+				});
 		});
 	});
 	
 	/* Include the Controllers */
 	require('./controllers/articles.js').init(app, articles);
-	require('./controllers/photos.js').init(app, flickr);
 	require('./controllers/profile.js').init(app);
-	require('./controllers/search.js').init(app, articles, flickr);
+	require('./controllers/photos.js').init(app, async, flickr);
+	require('./controllers/search.js').init(app, async, articles, flickr);
    

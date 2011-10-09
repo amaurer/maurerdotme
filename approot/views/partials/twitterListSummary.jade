@@ -1,0 +1,9 @@
+div#twitterListSummary.page-header
+	h2 Twitter List
+div#twitterListSummaryResults
+	ul.unstyled
+		- each tweet, t in tweetsList
+			li
+				a(href='http://twitter.com/' + tweet.from_user + '/')
+					img(src=tweet.profile_image_url, alt=tweet.from_user)
+				#{tweet.text}

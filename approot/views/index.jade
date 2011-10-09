@@ -1,16 +1,8 @@
-div#wrapper!= partial('partials/header')
+p I am Andrew Maurer and I'm pretty cool.
 
-	p I am testing some crap
 
-	div#wrapper
+include partials/articleListSummary
 
-		div#articlesSummary!= partial('partials/articleListSummary')
+include partials/twitterListSummary
 
-		div#flickrWall
-			ul
-				li.flickrImg
-					img
-		
-		a(href="http://coderwall.com/amaurer") Test
-
-		div#twitterSummary!= partial('partials/twitterSummary')
+include partials/photoListSummary

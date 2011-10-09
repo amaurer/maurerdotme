@@ -27,7 +27,7 @@ exports.init = function(accountName){
 exports.getLatest = function(callback){
 
 	request(_baseURL + _accountName, function(error, req){
-		callback(JSON.parse(req.body));
+		callback(error, JSON.parse(req.body));
 	});
 
 };

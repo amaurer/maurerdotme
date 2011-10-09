@@ -1,0 +1,8 @@
+div#photosListSummary.page-header
+	h2 Photo Summary List
+div#photosListSummaryResults
+	ul.media-grid
+		- each photo, pic in photosList
+			li
+				a(href="/photos/" + photo.title + "/" + photo.id + "/")
+					img.thumbnail(src='http://farm' + photo.farm + '.static.flickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_s.jpg', alt=photo.title)

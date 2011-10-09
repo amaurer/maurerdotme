@@ -1,5 +1,7 @@
-div#articleListSummary
-	ul.articles
-		- each article, art in articles
-			li.article
-				a(href='/articles/' + article.title.toLowerCase().replace(/\W/g, '-') + '/' + article.uid + '/')!= article.title
+div#articleListSummary.page-header
+	h2 Article Summary List
+div#articleListSummaryResults
+	- each article, art in articlesList
+		h3
+			a(href='/articles/' + article.title.toLowerCase().replace(/\W/g, '-') + '/' + article.uid + '/')!= article.title
+		!{article.summary}

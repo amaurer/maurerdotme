@@ -7,9 +7,6 @@ author=Andrew Maurer
 uid=124
 */
 
-#TODO
-
-##List
 
 - Site Design
 	* Go Over the flow of the site
@@ -18,4 +15,6 @@ uid=124
 	* Allow inclusion of scripts into articles
 	* Figure out how to use images
 	* Consume article date
+- Data
+	* Figure out if jsonP requests should use eval on the response
 	

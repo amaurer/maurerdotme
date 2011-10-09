@@ -1,7 +1,7 @@
 div#header
 	h1 Andrew Maurer
-		span Sr. Web Developer
+		small Sr. Web Developer
 
-	form(action='/search/', method='POST')
-		input(name='search', id='search', type='text')
-		input(id='search-button', type='submit')
+	form(action="/search/", method="POST")
+		input#search(name="search", type="text")
+		input#search-button.btn.primary(type="submit", value="Search")

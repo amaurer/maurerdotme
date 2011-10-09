@@ -1,9 +1,9 @@
 
 
-exports.init = function(app, flickrModel){
+exports.init = function(app, async, flickrModel){
 
 	app.get('/photos', function(req, res){
-		flickrModel.inParallel({
+		async.parallel({
 				tags : function(cb){
 					flickrModel.tags.getListUserPopular(function(e, data){
 						cb(e, (e)? [] : data.who.tags.tag);
@@ -17,13 +17,17 @@ exports.init = function(app, flickrModel){
 			},
 			function(e, data){
 				for (var i = 0, a = []; i < data.photos.length; i++) {
-					if(a.length <11) a.push(data.photos[i]);
+					if(a.length <11){
+						a.push(data.photos[i]);
+					} else {
+						break;
+					}
 				};
 				res.render('photos', {
 					layout : 'layouts/single_col_full',
 					title : 'Is cool',
 					flickr : {
-						photos : a, // limited to 10
+						photosList : a, // limited to 10
 						photoCollection : data.photos,
 						tags : data.tags
 					}
