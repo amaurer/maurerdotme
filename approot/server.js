@@ -54,22 +54,54 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 				}
 			},
 			function(e, data){
+
+				// Initialize Vars
+				var photosArray = [],
+					articlesArray = [],
+					tweetsArray = [],
+					i = 0;
+
+				// Collect Data
+				var arts = articles.getArticles('title', true),
+					photos = data.flickrPhotos,
+					tweets = data.twitterLatest;
+
+				// Loop over results to filter on 8 of them for summary
+				for (i = 0; i < photos.length; i++) {
+					if(photosArray.length <9){
+						photosArray.push(photos[i]);
+					} else {
+						break;
+					};
+				};
+
+				// Loop over results to filter on 5 of them for summary
+				for (i = 0; i < arts.length; i++) {
+					if(articlesArray.length <6){
+						articlesArray.push(arts[i]);
+					} else {
+						break;
+					};
+				};
+
 				// Loop over results to filter on 10 of them for summary
-				for (var i = 0, a = []; i < data.flickrPhotos.length; i++) {
-					if(a.length <9){
-						a.push(data.flickrPhotos[i]);
+				for (i = 0; i < tweets.length; i++) {
+					if(tweetsArray.length <11){
+						tweetsArray.push(tweets[i]);
 					} else {
 						break;
 					};
 				};
 				
+				// Render
 				res.render('index', {
 					layout : 'layouts/single_col_full',
 					title : 'Is cool',
-					articlesList : articles.getArticles('title', true),
-					tweetsList : data.twitterLatest,
-					photosList : a
+					articlesList : articlesArray,
+					tweetsList : tweetsArray,
+					photosList : photosArray
 				});
+
 		});
 	});
 	

@@ -13,4 +13,4 @@ div#twitterListSummaryResults
 				li
 					a(href='http://twitter.com/' + tweet.from_user + '/')
 						img(src=tweet.profile_image_url, alt=tweet.from_user)
-					#{tweet.text}
+					small!= tweet.text
