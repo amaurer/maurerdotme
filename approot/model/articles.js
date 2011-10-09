@@ -32,19 +32,39 @@ exports.init = function(articleDirectory, fileExtension){
 	});
 
 	function getDataFromFile(fileData){
+
+		// Prepare the regex and objects for processing
+		// TODO : probably some type of overhead creating the regex patterns here because this function executes in a loop.
+		//		Move regex outside of loop.
 		var reMetaFinder = /^\/\*{3}[\s\S]*?\*\//,
 			reReplaceOpenComment = /\/\*{3}[\s]/,
 			reReplaceCloseComment = /\s\*\//,
 			returnMetaObject = {},
 			metaDataMatch = fileData.match(reMetaFinder),
 			oSplit = '';
-		if(metaDataMatch.length === 0) return false; 
+
+		// MetaData is REQUIRED! 
+		if(metaDataMatch.length === 0){
+			return false; 
+		};
+
+		// Remove commenting declarations
 		var metaData = metaDataMatch[0].replace(reReplaceOpenComment, '').replace(reReplaceCloseComment, '').split('\n');
+
+		// Loop over the name/value pairs and set them in an object
 		for(i=0, len = metaData.length; i<len; i++){
 			oSplit = metaData[i].split('=');
 			returnMetaObject[oSplit[0]] = oSplit[1];
 		};
+
+		// If the user didn't set a time, set it to current so other crap doesn't break.
+		if(returnMetaObject.createdDateTime == null){
+			returnMetaObject.createdDateTime = new Date().getTime();
+		};
+
+		// Get the remainder of the file and pass to MarkDown for parsing.
 		returnMetaObject.body = nmd(fileData.replace(reMetaFinder, ''));
+
 		return returnMetaObject;
 	};
 
@@ -52,13 +72,20 @@ exports.init = function(articleDirectory, fileExtension){
 
 };
 
+// Sort types that an application can use. Static Const.
 exports.getArticleSortTypes = function(){
 	return ['date', 'author', 'title'];
 };
+
+// Return all articles.
 exports.getArticles = function(sortType, ascDescBoolean){
+	//If the sort type passed is not a string, return false cause you fail!
 	if(typeof sortType !== 'string') return articles;
+
 	return exports.getArticlesBySortType.apply(this, arguments);
 };
+
+// Return all articles based on sort type.
 exports.getArticlesBySortType = function(sortType, ascDescBoolean){
 	/*
 		return articles sorted by type
@@ -84,6 +111,7 @@ exports.getArticlesBySortType = function(sortType, ascDescBoolean){
 		return 0;
 	};
 	 
+	// Sorting functions for the different sort types. This should match the sort types array found in this file.
 	var sortFunctions = {
 		'date' : function(a, b){
 			var aa = a['createdDateTime'], bb = b['createdDateTime'];
@@ -103,6 +131,8 @@ exports.getArticlesBySortType = function(sortType, ascDescBoolean){
 	};
 	return articles.sort(sortFunctions[sortType]);
 };
+
+// Returns an article by its requested ID
 exports.getArticleByID = function(requestedID){
 	for(var i=0, len = articles.length; i<len; i++){
 		if(articles[i].uid === requestedID){
@@ -111,20 +141,16 @@ exports.getArticleByID = function(requestedID){
 	};
 	return new Article();
 };
+
+// Filters articles on title and body
 exports.search = function(phrase){
+
 	var re = RegExp(phrase + '*?', 'gi');
-	/* We can do this better
-	var returnArticles = [];
-	for(var i=0, x='', len = articles.length; i<len; i++){
-		x = articles[i];
-		if(re.find(x.title) !== -1 || re.find(x.body) !== -1){
-			returnArticles.push(x);
-		};
-	}
-	*/
+
 	return articles.filter(function(x){
 		return (x.title.search(re) !== -1 || x.body.search(re) !== -1);
 	});
+
 };
 
 /* Not used... yet */

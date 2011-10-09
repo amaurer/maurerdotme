@@ -1,13 +1,12 @@
 /***
 title=Things I need to do
-shortTitle=Things I need to do for my site.
-summary=This is a list of stuff that I need to accomplish before going live
-createdDateTime=555
+createdDateTime=1318175394
 author=Andrew Maurer
-uid=124
+uid=2011100903
+summary=This is a list of stuff that I need to accomplish before going live
 */
 
-
+###TODO List
 - Site Design
 	* Go Over the flow of the site
 	* Decide on a style

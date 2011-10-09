@@ -1,9 +1,10 @@
+
+var cachet = require('../helpers/cachet.js');
 var request = require('request');
 var base_url = 'http://flickr.com/services/rest/?';
 var api_key = '';
 var user_id = '';
 var format = 'json';
-var saved_requests = {};
 
 function RequestObject(rn, rp){
 	this.requestName = rn || '';
@@ -15,8 +16,8 @@ function requestInterface(options, callback){
 
 	var params = getParamsURL(options.requestName, options.requestParams);
 
-	if(saved_requests[params] != null){
-		if(callback) callback.call(this, null, saved_requests[params]);
+	if(cachet.isCache(params)){
+		if(callback) callback.call(this, null, cachet.getCache(params).value);
 		return true;
 	};
 
@@ -26,8 +27,8 @@ function requestInterface(options, callback){
 		// Is Evil ?
 		eval(d);
 		function jsonFlickrApi(dd){
-			saved_requests[params] = dd;
-			if(callback) callback.call(this, null, dd);
+			cachet.setCache(params, dd, 6);
+			if(callback != null) callback.call(this, null, cachet.getCache(params).value);
 		}
 	});
 
@@ -84,7 +85,6 @@ exports.init = function(apiKey, userID, requestFormat){
 	api_key = apiKey || '';
 	user_id = userID || '';
 	format = requestFormat || 'json';
-	saved_requests = {};
 
 	return api;
 };

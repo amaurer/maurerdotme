@@ -1,7 +1,12 @@
 div#articleListSummary.page-header
 	h2 Article Summary List
 div#articleListSummaryResults
-	- each article, art in articlesList
-		h3
-			a(href='/articles/' + article.title.toLowerCase().replace(/\W/g, '-') + '/' + article.uid + '/')!= article.title
-		!{article.summary}
+	- if(articlesList.length === 0)
+		p
+			small Zero Results
+	- else
+		- each article, art in articlesList
+			h3
+				a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/')!= article.title
+			!{article.summary}
+div.space

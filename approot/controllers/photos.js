@@ -26,8 +26,8 @@ exports.init = function(app, async, flickrModel){
 				res.render('photos', {
 					layout : 'layouts/single_col_full',
 					title : 'Is cool',
-					flickr : {
-						photosList : a, // limited to 10
+					flickrData : {
+						photosList : data.photos, // limited to 10
 						photoCollection : data.photos,
 						tags : data.tags
 					}
@@ -37,6 +37,7 @@ exports.init = function(app, async, flickrModel){
 	
 	app.get('/photos/:photoTitle/:photoID', function(req, res){
 		flickrModel.photos.getInfo(req.params.photoID, function(e, data){
+			// TODO
 			res.send(JSON.stringify(data));
 		});
 	});

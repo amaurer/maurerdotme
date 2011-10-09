@@ -13,14 +13,20 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+// Setup
+var customSettings = require('./customSettings.js'),
+	express = require('express'),
+	app = express.createServer(),
+	async = require('async');
 
-var customSettings = require('./customSettings.js');
-var express = require('express');
-var app = express.createServer();
-var async = require('async');
+// Model
 var articles = require('./model/articles.js').init('./articles/', 'md'),
 	flickr = require('./model/flickr.js').init(customSettings.flickr.api_key, customSettings.flickr.user_id),
 	twitter = require('./model/twitter.js').init(customSettings.twitter.account_name);
+
+// Helpers
+	require('./helpers/stringDecorators.js');
+
 
 	app.configure(function(){
 		app.set('views', __dirname + '/views');
@@ -50,12 +56,13 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 			function(e, data){
 				// Loop over results to filter on 10 of them for summary
 				for (var i = 0, a = []; i < data.flickrPhotos.length; i++) {
-					if(a.length <11){
+					if(a.length <9){
 						a.push(data.flickrPhotos[i]);
 					} else {
 						break;
 					};
 				};
+				
 				res.render('index', {
 					layout : 'layouts/single_col_full',
 					title : 'Is cool',
@@ -68,7 +75,8 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 	
 	/* Include the Controllers */
 	require('./controllers/articles.js').init(app, articles);
-	require('./controllers/profile.js').init(app);
 	require('./controllers/photos.js').init(app, async, flickr);
 	require('./controllers/search.js').init(app, async, articles, flickr);
+	require('./controllers/profile.js').init(app);
+	require('./controllers/contact.js').init(app);
    

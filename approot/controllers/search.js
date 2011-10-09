@@ -3,8 +3,7 @@
 exports.init = function(app, async, articlesModel, flickrModel){
 
 	app.get('/search/:searchTag', function(req, res){
-		res.send(req.params.searchTag);
-		return;
+
 		var articlesData = articlesModel.getArticleByID(req.params.articleID);
 		// Get title data?
 		res.render('articleDetails', {
@@ -13,6 +12,7 @@ exports.init = function(app, async, articlesModel, flickrModel){
 			photosList : flickrData.photos,
 			article : articlesModel.getArticleByID(req.params.articleID)
 		});
+		
 	});
 
 	app.post('/search', function(req, res){

@@ -1,6 +1,7 @@
 div#articleDetails.page-header
 
 	h2!= article.title + " "
-		small!= article.createdDateTime
+		small
+			#{new Date(article.createdDateTime * 1000)}
 
 div#articleDetailsBody!= article.body
