@@ -35,6 +35,7 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 		app.use(express.bodyParser());
 		app.use(app.router);
 		app.use(express.static(__dirname + '/assets'));
+		//app.use(express.static(__dirname + '/assets', { maxAge: 31557600000 }));
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
 
@@ -97,6 +98,7 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 				res.render('index', {
 					layout : 'layouts/single_col_full',
 					title : 'Is cool',
+					page : 'home',
 					articlesList : articlesArray,
 					tweetsList : tweetsArray,
 					photosList : photosArray

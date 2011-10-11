@@ -1,0 +1,14 @@
+
+div#article.page-header
+	h2 Article
+div#articleResults
+	- if(articlesList.length === 0)
+		p
+			small Zero Results
+	- else
+		- each article, art in articlesList
+			h3
+				a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/')!= article.title
+			!{article.body.substr(0, article.body.indexOf('</p>') + 6)}
+			p
+				a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/') Read more...

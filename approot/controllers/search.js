@@ -9,6 +9,7 @@ exports.init = function(app, async, articlesModel, flickrModel){
 		res.render('articleDetails', {
 			layout : 'layouts/single_col_full',
 			title : 'Is cool',
+			page : 'search',
 			photosList : flickrData.photos,
 			article : articlesModel.getArticleByID(req.params.articleID)
 		});
@@ -30,6 +31,7 @@ exports.init = function(app, async, articlesModel, flickrModel){
 			res.render('search', {
 				layout : 'layouts/single_col_full',
 				title : 'Is cool',
+				page : 'search',
 				searchPhrase : phrase,
 				photosList : flickrData.photos.photo,
 				articlesList : articleData

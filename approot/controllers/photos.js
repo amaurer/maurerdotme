@@ -3,6 +3,7 @@
 exports.init = function(app, async, flickrModel){
 
 	app.get('/photos', function(req, res){
+
 		async.parallel({
 				tags : function(cb){
 					flickrModel.tags.getListUserPopular(function(e, data){
@@ -26,6 +27,7 @@ exports.init = function(app, async, flickrModel){
 				res.render('photos', {
 					layout : 'layouts/single_col_full',
 					title : 'Is cool',
+					page : 'photos',
 					flickrData : {
 						photosList : data.photos, // limited to 10
 						photoCollection : data.photos,
@@ -33,12 +35,23 @@ exports.init = function(app, async, flickrModel){
 					}
 				});
 		});
+
 	});
 	
 	app.get('/photos/:photoTitle/:photoID', function(req, res){
 		flickrModel.photos.getInfo(req.params.photoID, function(e, data){
 			// TODO
-			res.send(JSON.stringify(data));
+			res.render('photoDetails', {
+				layout : 'layouts/single_col_full',
+				title : 'Is cool',
+				page : 'photos',
+				flickrData : {
+					photosList : data.photos, // limited to 10
+					photoCollection : data.photos,
+					tags : data.tags
+				}
+			});
+			console.log(data);
 		});
 	});
 	
@@ -46,6 +59,7 @@ exports.init = function(app, async, flickrModel){
 		var options = {
 			tags : req.params.tags
 		};
+			// TODO
 		flickrModel.photos.search(options, function(e, data){
 			res.send(JSON.stringify(data));
 		});
