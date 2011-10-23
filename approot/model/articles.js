@@ -41,7 +41,8 @@ exports.init = function(articleDirectory, fileExtension){
 			reReplaceCloseComment = /\s\*\//,
 			returnMetaObject = {},
 			metaDataMatch = fileData.match(reMetaFinder),
-			oSplit = '';
+			oSplit = '',
+			rawBody = "";
 
 		// MetaData is REQUIRED! 
 		if(metaDataMatch.length === 0){
@@ -63,7 +64,10 @@ exports.init = function(articleDirectory, fileExtension){
 		};
 
 		// Get the remainder of the file and pass to MarkDown for parsing.
-		returnMetaObject.body = nmd(fileData.replace(reMetaFinder, ''));
+		rawBody = fileData.replace(reMetaFinder, '');
+		
+		returnMetaObject.rawBody = rawBody;
+		returnMetaObject.body = nmd(rawBody);
 
 		return returnMetaObject;
 	};
@@ -148,7 +152,7 @@ exports.search = function(phrase){
 	var re = RegExp(phrase + '*?', 'gi');
 
 	return articles.filter(function(x){
-		return (x.title.search(re) !== -1 || x.body.search(re) !== -1);
+		return (x.title.search(re) !== -1 || x.rawBody.search(re) !== -1);
 	});
 
 };

@@ -117,7 +117,8 @@ exports.init = function(app, async, flickrModel){
 		});
 
 	});
-	
+
+/*	
 	app.get('/photos/:tags', function(req, res){
 		var options = {
 			tags : req.params.tags
@@ -127,5 +128,6 @@ exports.init = function(app, async, flickrModel){
 			res.send(JSON.stringify(data));
 		});
 	});
+*/
 	
 };

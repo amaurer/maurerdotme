@@ -12,8 +12,6 @@ exports.init = function(app, async, articlesModel, flickrModel){
 			phrase = req.params.searchTag;
 		};
 
-		console.log(phrase);
-
 		var articleData = articlesModel.search(phrase);
 
 		var flickrOptions = {
