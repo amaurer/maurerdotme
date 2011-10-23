@@ -1,0 +1,9 @@
+
+div#tagsList
+	ul.unstyled
+		-each tag, t in tagsList
+			li
+				a(style="font-size : #{tag.count.toString().toTagPopularitySize()};")
+					#{tag._content.substr(0, 1).toUpperCase() + tag._content.substr(1)}
+
+			
