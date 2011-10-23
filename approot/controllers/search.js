@@ -9,8 +9,10 @@ exports.init = function(app, async, articlesModel, flickrModel){
 		if(req.body != null && req.body.search != null){
 			phrase = req.body.search;	
 		} else if (req.params != null && req.params.searchTag != null && req.params.searchTag.length !== 0){
-			phrase = req.params.searchTag[0];
+			phrase = req.params.searchTag;
 		};
+
+		console.log(phrase);
 
 		var articleData = articlesModel.search(phrase);
 

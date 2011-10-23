@@ -97,7 +97,7 @@ exports.init = function(app, async, flickrModel){
 			},
 			function(e, data){
 
-				var pc = getNextPreviousPhotos(data.photoCollection);
+				var pc = getNextPreviousPhotos(data.photoCollection, data.photo.id);
 
 				res.render('photoDetails', {
 					layout : 'layouts/single_col_full',
@@ -105,11 +105,11 @@ exports.init = function(app, async, flickrModel){
 					page : 'photos',
 					photo : data.photo,
 					previousPhoto : {
-						href : getPhotoDetailLink(previousPhoto),
+						href : getPhotoDetailLink(pc.previousPhoto),
 						title : pc.previousPhoto.title
 					},
 					nextPhoto : {
-						href : getPhotoDetailLink(nextPhoto),
+						href : getPhotoDetailLink(pc.nextPhoto),
 						title : pc.nextPhoto.title
 					},
 					currentPhotoNumber : '' + pc.currentPhotoNumber + ' of ' + data.photoCollection.length
