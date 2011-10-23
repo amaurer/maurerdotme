@@ -22,3 +22,6 @@ String.prototype.toTagPopularitySize = function(){
 	return fs;
 }
 
+Date.prototype.toEST = function(){
+	
+}
