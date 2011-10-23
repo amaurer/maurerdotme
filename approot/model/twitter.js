@@ -34,6 +34,7 @@ exports.getLatest = function(callback){
 	// If response is cached, use it
 	if(cachet.isCache(uri)){
 		callback(null, cachet.getCache(uri).value);
+		return;
 	};
 
 	// Make http request for data

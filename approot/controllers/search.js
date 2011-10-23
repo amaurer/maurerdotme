@@ -2,23 +2,15 @@
 
 exports.init = function(app, async, articlesModel, flickrModel){
 
-	app.get('/search/:searchTag', function(req, res){
+	app.all('/search/:searchTag?', function(req, res){
 
-		var articlesData = articlesModel.getArticleByID(req.params.articleID);
-		// Get title data?
-		res.render('articleDetails', {
-			layout : 'layouts/single_col_full',
-			title : 'Is cool',
-			page : 'search',
-			photosList : flickrData.photos,
-			article : articlesModel.getArticleByID(req.params.articleID)
-		});
-		
-	});
+		var phrase = 'mish-mash this is garbage'; // use string with one space to return everything
 
-	app.post('/search', function(req, res){
-
-		var phrase = req.body.search || '';
+		if(req.body != null && req.body.search != null){
+			phrase = req.body.search;	
+		} else if (req.params != null && req.params.searchTag != null && req.params.searchTag.length !== 0){
+			phrase = req.params.searchTag[0];
+		};
 
 		var articleData = articlesModel.search(phrase);
 

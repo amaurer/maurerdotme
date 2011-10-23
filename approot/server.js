@@ -20,13 +20,15 @@ var customSettings = require('./customSettings.js'),
 	async = require('async');
 
 // Model
-var articles = require('./model/articles.js').init('./articles/', 'md'),
-	flickr = require('./model/flickr.js').init(customSettings.flickr.api_key, customSettings.flickr.user_id),
-	twitter = require('./model/twitter.js').init(customSettings.twitter.account_name);
+var articles = require('./model/articles.js')
+		.init('./articles/', 'md'),
+	flickr = require('./model/flickr.js')
+		.init(customSettings.flickr.api_key, customSettings.flickr.user_id),
+	twitter = require('./model/twitter.js')
+		.init(customSettings.twitter.account_name);
 
 // Helpers
-	require('./helpers/stringDecorators.js');
-
+	require('./helpers/decorators.js');
 
 	app.configure(function(){
 		app.set('views', __dirname + '/views');
@@ -40,74 +42,9 @@ var articles = require('./model/articles.js').init('./articles/', 'md'),
 	});
 
 	app.listen(3000);
-
-	app.get('/', function(req, res){
-		async.parallel({
-				flickrPhotos : function(cb){
-					flickr.photos.search(function(e, data){
-						cb(e, (e)? [] : data.photos.photo);
-					});
-				},
-				twitterLatest : function(cb){
-					twitter.getLatest(function(e, data){
-						cb(e, (e)? [] : data.results);
-					});
-				}
-			},
-			function(e, data){
-
-				// Initialize Vars
-				var photosArray = [],
-					articlesArray = [],
-					tweetsArray = [],
-					i = 0;
-
-				// Collect Data
-				var arts = articles.getArticles('title', true),
-					photos = data.flickrPhotos,
-					tweets = data.twitterLatest;
-
-				// Loop over results to filter on 8 of them for summary
-				for (i = 0; i < photos.length; i++) {
-					if(photosArray.length <9){
-						photosArray.push(photos[i]);
-					} else {
-						break;
-					};
-				};
-
-				// Loop over results to filter on 5 of them for summary
-				for (i = 0; i < arts.length; i++) {
-					if(articlesArray.length <6){
-						articlesArray.push(arts[i]);
-					} else {
-						break;
-					};
-				};
-
-				// Loop over results to filter on 10 of them for summary
-				for (i = 0; i < tweets.length; i++) {
-					if(tweetsArray.length <11){
-						tweetsArray.push(tweets[i]);
-					} else {
-						break;
-					};
-				};
-				
-				// Render
-				res.render('index', {
-					layout : 'layouts/single_col_full',
-					title : 'Is cool',
-					page : 'home',
-					articlesList : articlesArray,
-					tweetsList : tweetsArray,
-					photosList : photosArray
-				});
-
-		});
-	});
 	
 	/* Include the Controllers */
+	require('./controllers/index.js').init(app, async, articles, flickr, twitter);
 	require('./controllers/articles.js').init(app, articles);
 	require('./controllers/photos.js').init(app, async, flickr);
 	require('./controllers/search.js').init(app, async, articles, flickr);

@@ -1,0 +1,34 @@
+
+div.page-header
+	div.flt-right
+		p
+			#{currentPhotoNumber}
+			&nbsp;
+			a.btn(href=previousPhoto.href, title=previousPhoto.title._content) << Previous
+			&nbsp;
+			a.btn.primary(href=nextPhoto.href, title=nextPhoto.title._content) Next >>
+
+	h2!= photo.title._content
+
+
+div#photoDetailResult
+
+	p.media-grid 
+		a(href=photo.urls.url[0]._content, title="Flickr page for " + photo.title._content)
+			img(src= "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg", alt=photo.title._content)
+
+	div.row
+		div.span8
+			h4 Details
+			ul.unstyled
+				li Description : #{photo.description._content}
+				li Views : #{photo.views}
+				li Taken : #{new Date(photo.dates.taken).toString()}
+				li Posted : #{new Date(photo.dates.posted * 1000).toString()}
+				li Comments : #{photo.comments._content}
+				
+		div.span8
+			h4 Tags
+			ul.unstyled
+				- each tag, t in photo.tags.tag
+					li!= tag.raw

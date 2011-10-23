@@ -2,3 +2,5 @@ h1,h2,h3,h4,h5,h6{font-family:"Andika","Helvetica Neue",Helvetica,Arial,sans-ser
 h1 a,h1 a:hover{text-decoration:none;color:#404040;}
 h1 small{display:block;padding-left:5px;}
 #wrapper{padding-top:80px;}
+.flt-right{float:right;clear:left;}
+.flt-left{float:left;clear:right;}

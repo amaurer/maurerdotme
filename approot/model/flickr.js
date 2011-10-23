@@ -18,17 +18,23 @@ function requestInterface(options, callback){
 
 	if(cachet.isCache(params)){
 		if(callback) callback.call(this, null, cachet.getCache(params).value);
-		return true;
+		return;
 	};
 
 	request(base_url + params, function(e, r, d){
-		if(e && callback) callback.call(this, d)
-		else if (e) throw e;
+		if(e && callback){
+			callback.call(this, e, d);
+		} else if (e){
+			throw e;
+		}
 		// Is Evil ?
 		eval(d);
 		function jsonFlickrApi(dd){
+			//TODO : dd.getPhotoURL = api.helpers.getPhotoURL;
 			cachet.setCache(params, dd, 6);
-			if(callback != null) callback.call(this, null, cachet.getCache(params).value);
+			if(callback != null){
+				callback.call(this, null, cachet.getCache(params).value);
+			}
 		}
 	});
 
@@ -49,6 +55,61 @@ function requestInterface(options, callback){
 };
 
 var api = {
+
+	helpers : {
+		photoSizes : {
+			thumbnail : {
+				abrv : 't',
+				description : '75x75'
+			},
+			sqaure : {
+				abrv : 's',
+				description : '75x75'
+			},
+			small : {
+				abrv : 'm',
+				description : '40 on longest side'
+			},
+			medium : {
+				abrv : '-',
+				description : '500 on longest side'
+			},
+			mediumLarge : {
+				abrv : 'z',
+				description : '640, 640 on longest side'
+			},
+			large : {
+				abrv : 'b',
+				description : '1024 on longest side'
+			},
+			original : {
+				abrv : 'o',
+				description : 'original image, either a jpg, gif or png, depending on source format'
+			}
+		},
+		getPhotoURL : function(photoObject, size){
+
+			var photoSizes = api.helpers.photoSizes;
+
+			var s = '//farm';
+				s += photoObject.farm;
+				s += '.static.flickr.com/';
+				s += photoObject.server + '/';
+				s += photoObject.id + '_';
+				s += photoObject.secret + '_';
+
+				if(photoSizes[size] != null){
+					s += photoSizes[size];
+				} else {
+					s += 'm';
+				}
+
+				s += '.jpg';
+
+				return s;
+			
+		}
+	},
 
 	photos : {
 		search : function(params, callback){
