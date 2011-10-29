@@ -45,9 +45,10 @@ var articles = require('./model/articles.js')
 	cluster(app)
 		.set('workers', 4)
 		//.use(cluster.debug())
-		.listen(3000);
-
-	//app.listen(3000);
+		.listen(8080);
+/*
+	app.listen(8080);
+*/
 	
 	/* Include the Controllers */
 	require('./controllers/index.js').init(app, async, articles, flickr, twitter);
