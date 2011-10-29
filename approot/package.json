@@ -1,6 +1,13 @@
 {
 	"name" : "maurerdotme",
-	"version" : "0.0.2",
+	"decription" : "Personal Site",
+	"author" : "Andrew Maurer - AMAURER",
+	"version" : "0.1.1",
+	"bugs" : "Andrew Maurer <amaurer@maurer.me>",
+	"engines" : {
+		"node" : "0.4.10"
+	},
+	"main" : "server.js",
 	"dependencies" : {
 		"express" : "latest",
 		"jade" : "latest",

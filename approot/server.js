@@ -18,7 +18,6 @@ var customSettings = require('./customSettings.js'),
 	express = require('express'),
 	app = express.createServer(),
 	async = require('async');
-var cluster = require('cluster');
 
 // Model
 var articles = require('./model/articles.js')
@@ -42,12 +41,13 @@ var articles = require('./model/articles.js')
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
 
+	app.listen(8080);
+/*
+var cluster = require('cluster');
 	cluster(app)
 		.set('workers', 4)
 		//.use(cluster.debug())
 		.listen(8080);
-/*
-	app.listen(8080);
 */
 	
 	/* Include the Controllers */
