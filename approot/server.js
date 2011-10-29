@@ -18,7 +18,8 @@ var dir = process.env.directory;
 var customSettings = require('./customSettings.js'),
 	express = require('express'),
 	app = express.createServer(),
-	async = require('async');
+	async = require('async'),
+	cluster = require('cluster');
 
 // Model
 var articles = require('./model/articles.js')
@@ -42,7 +43,6 @@ var articles = require('./model/articles.js')
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
 
-var cluster = require('cluster');
 	cluster(app)
 		.set('workers', 4)
 		.listen(8080);
