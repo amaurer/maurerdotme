@@ -78,7 +78,7 @@ exports.init = function(app, async, articleModel, flickrModel, twitterModel){
 				// Render
 				res.render('index', {
 					layout : 'layouts/single_col_full',
-					title : 'Is cool',
+					title : 'Guru of ColdFusion, Node.js, JavaScript and Webservices',
 					page : 'home',
 					articlesList : articlesArray,
 					tweetsList : tweetsArray,

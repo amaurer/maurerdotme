@@ -4,7 +4,7 @@ exports.init = function(app, flickrModel){
 		res.render('profile', {
 			layout : 'layouts/single_col_full',
 			page : 'profile',
-			title : 'Is cool'
+			title : 'ColdFusion, Node.js, JavaScript and Webservice Master!'
 		});
 	});
 

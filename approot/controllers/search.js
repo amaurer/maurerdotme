@@ -22,7 +22,7 @@ exports.init = function(app, async, articlesModel, flickrModel){
 			
 			res.render('search', {
 				layout : 'layouts/single_col_full',
-				title : 'Is cool',
+				title : 'Search Results for ' + phrase,
 				page : 'search',
 				searchPhrase : phrase,
 				photosList : flickrData.photos.photo,

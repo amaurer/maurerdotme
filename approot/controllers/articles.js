@@ -7,9 +7,9 @@ exports.init = function(app, articlesModel){
 		// Get title data?
 		res.render('articleDetails', {
 			layout : 'layouts/single_col_full',
-			title : 'Is cool',
+			title : 'Details about ' + articlesData.title,
 			page : 'articles',
-			article : articlesModel.getArticleByID(req.params.articleID)
+			article : articlesData
 		});
 	});
 
@@ -33,7 +33,7 @@ exports.init = function(app, articlesModel){
 
 		res.render('articles', {
 			layout : 'layouts/single_col_full',
-			title : 'Is cool',
+			title : 'Articles About Web Technology',
 			page : 'articles',
 			articlesList : arts
 		});

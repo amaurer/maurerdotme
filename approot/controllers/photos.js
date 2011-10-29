@@ -69,7 +69,7 @@ exports.init = function(app, async, flickrModel){
 				};
 				res.render('photos', {
 					layout : 'layouts/single_col_full',
-					title : 'Is cool',
+					title : 'Personal Photos',
 					page : 'photos',
 					flickrData : {
 						photosList : data.photos, // limited to 10
@@ -101,7 +101,7 @@ exports.init = function(app, async, flickrModel){
 
 				res.render('photoDetails', {
 					layout : 'layouts/single_col_full',
-					title : data.photo.title._content,
+					title : 'Photo Details of ' + data.photo.title._content,
 					page : 'photos',
 					photo : data.photo,
 					previousPhoto : {

@@ -4,10 +4,11 @@ exports.init = function(app, flickrModel){
 		res.render('contact', {
 			layout : 'layouts/single_col_full',
 			page : 'contact',
-			title : 'Is cool'
+			title : 'Contact Me'
 		});
 	});
 
+/*
 	app.get('/contact/submit', function(req, res){
 		res.render('contact', {
 			layout : 'layouts/single_col_full',
@@ -15,5 +16,6 @@ exports.init = function(app, flickrModel){
 			title : 'Is cool'
 		});
 	});
+*/
 
 };
