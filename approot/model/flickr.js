@@ -116,7 +116,8 @@ var api = {
 			var options = {
 				sort : 'date-taken-desc',
 				tags : null,
-				text : null
+				text : null,
+				per_page : '200'
 			};
 			if(typeof params === 'function'){ // If user just wants default params
 				callback = params;
