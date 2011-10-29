@@ -14,17 +14,17 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 // Setup
-var customSettings = require('./customSettings.js'),
+var customSettings = require(__dirname + '/customSettings.js'),
 	express = require('express'),
 	app = express.createServer(),
 	async = require('async');
 
 // Model
-var articles = require('./model/articles.js')
-		.init('./articles/', 'md'),
-	flickr = require('./model/flickr.js')
+var articles = require(__dirname + '/model/articles.js')
+		.init(__dirname + '/articles/', 'md'),
+	flickr = require(__dirname + '/model/flickr.js')
 		.init(customSettings.flickr.api_key, customSettings.flickr.user_id),
-	twitter = require('./model/twitter.js')
+	twitter = require(__dirname + '/model/twitter.js')
 		.init(customSettings.twitter.account_name);
 
 // Helpers
