@@ -4,6 +4,4 @@ div#tagsList
 		-each tag, t in tagsList
 			li
 				a(href="/search/#{tag._content}", style="font-size : #{tag.count.toString().toTagPopularitySize()};")
-					#{tag._content.substr(0, 1).toUpperCase() + tag._content.substr(1)}
-
-			
+					!{tag._content.substr(0, 1).toUpperCase() + tag._content.substr(1)}

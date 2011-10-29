@@ -26,7 +26,8 @@ exports.init = function(app, async, articlesModel, flickrModel){
 				page : 'search',
 				searchPhrase : phrase,
 				photosList : flickrData.photos.photo,
-				articlesList : articleData
+				articlesList : articleData,
+				search : phrase
 			});
 
 		});

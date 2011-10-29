@@ -1,6 +1,7 @@
 
 
 var articles = [];
+var tags = [];
 var nmd = require('node-markdown').Markdown;
 var fs = require('fs');
 
@@ -42,7 +43,9 @@ exports.init = function(articleDirectory, fileExtension){
 			returnMetaObject = {},
 			metaDataMatch = fileData.match(reMetaFinder),
 			oSplit = '',
-			rawBody = "";
+			rawBody = "",
+			tagsBunch = [],
+			i, ii, x, found = false;
 
 		// MetaData is REQUIRED! 
 		if(metaDataMatch.length === 0){
@@ -54,8 +57,31 @@ exports.init = function(articleDirectory, fileExtension){
 
 		// Loop over the name/value pairs and set them in an object
 		for(i=0, len = metaData.length; i<len; i++){
-			oSplit = metaData[i].split('=');
-			returnMetaObject[oSplit[0]] = oSplit[1];
+			oSplit = metaData[i].split("=");
+			// Special handler for Tags
+			if(oSplit[0].toLowerCase() === "tags"){
+				tagsBunch = tagsBunch.concat(oSplit[1].split(","));
+			} else {
+				returnMetaObject[oSplit[0]] = oSplit[1];
+			}
+		};
+
+		// Prep tags from large array to
+		for(i=0, len = tagsBunch.length; i<len; i++){
+			x = tagsBunch[i].toLowerCase().replace(/\s+/g, "");
+			found = false;
+			for(ii=0, lenn = tags.length; ii<lenn; ii++){
+				if(tags[ii]._content.toLowerCase() === x){
+					tags[ii].count++;
+					found = true;
+				};
+			};
+			if(!found){
+				tags.push({
+					_content : x,
+					count : 1
+				});
+			}
 		};
 
 		// If the user didn't set a time, set it to current so other crap doesn't break.
@@ -76,6 +102,10 @@ exports.init = function(articleDirectory, fileExtension){
 
 };
 
+// Sort types that an application can use. Static Const.
+exports.getTags = function(){
+	return tags;
+};
 // Sort types that an application can use. Static Const.
 exports.getArticleSortTypes = function(){
 	return ['date', 'author', 'title'];

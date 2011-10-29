@@ -1,5 +1,9 @@
 
+- if( search == null )
+	- var search = "";
+
+
 form.pull-right(action="/search/", method="POST")
-	input#search(name="search", type="text")
+	input#search(name="search", type="text", value="#{search}")
 	&nbsp;
 	input#search-button.btn.primary(type="submit", value="Search")

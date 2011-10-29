@@ -1,5 +1,19 @@
 
 exports.init = function(app, async, articleModel, flickrModel, twitterModel){
+
+	var sortedTags = [];
+
+	function sortTags(a, b){
+		var aa = a._content.toLowerCase(),
+			bb = b._content.toLowerCase();
+		if(aa > bb){
+			return 1;
+		} else if(aa < bb){
+			return -1;
+		} else {
+			return 0;
+		}
+	};
 	
 	app.get('/', function(req, res){
 		async.parallel({
@@ -34,7 +48,7 @@ exports.init = function(app, async, articleModel, flickrModel, twitterModel){
 
 				// Loop over results to filter on 8 of them for summary
 				for (i = 0; i < photos.length; i++) {
-					if(photosArray.length <9){
+					if(photosArray.length <18){
 						photosArray.push(photos[i]);
 					} else {
 						break;
@@ -59,6 +73,8 @@ exports.init = function(app, async, articleModel, flickrModel, twitterModel){
 					};
 				};
 
+				sortedTags = articleModel.getTags().concat(data.flickrTags).sort(sortTags);
+
 				// Render
 				res.render('index', {
 					layout : 'layouts/single_col_full',
@@ -67,7 +83,7 @@ exports.init = function(app, async, articleModel, flickrModel, twitterModel){
 					articlesList : articlesArray,
 					tweetsList : tweetsArray,
 					photosList : photosArray,
-					tagsList : data.flickrTags
+					tagsList : sortedTags
 				});
 
 		});

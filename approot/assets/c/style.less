@@ -1,11 +1,9 @@
 
-
-
+/* HTML Tags */
 h1, h2, h3, h4, h5, h6 {
 	font-family : Coda, cursive, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight : normal;
 }
-
 h1 a, h1 a:hover {
 	text-decoration : none;
 	color : #404040;
@@ -15,17 +13,24 @@ h1 small {
 	padding-left : 5px;
 }
 
+/* layout */
+html, body {
+	height : 100%;
+}
 #wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
 	padding-top : 120px;
 }
 
+/* Header */
 .brand h3 a {
 	font-family : 'Marck Script', cursive;
 	text-shadow : 0 2px 0 rgba(0, 0, 0, 1);
 	font-size : 4em;
 	padding-bottom : 0px;
 }
-
 .topbar .nav {
 	margin : 0px 0px 0px 7px;
 }
@@ -42,12 +47,32 @@ h1 small {
 	text-shadow : 1px 1px 1px rgba(128, 128, 128, .5);
 }
 
+/* Profile */
 #profileResult img {
 	border : 1px solid #000;
 	padding : 3px;
-	margin : 0px 10px 0px;
+	margin : 0px 10px 0px 0px;
 }
 
+/* Tags */
+#tagsList li {
+	display : inline;
+	font-size : 10px;
+}
+#tagsList li a {
+	margin-right : 3px;
+}
+
+/* Footer */
+#Links li {
+	display : inline;
+	margin-right : 30px;
+}
+#Links li a {
+	color : #fff;
+}
+
+/* Helpers */
 .flt-right {
 	float : right;
 	clear : left;

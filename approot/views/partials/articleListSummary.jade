@@ -1,11 +1,11 @@
-div#articleListSummary.page-header
-	h2 Article Summary List
+
 div#articleListSummaryResults
 	- if(articlesList.length === 0)
 		p
 			small Zero Results
 	- else
 		- each article, art in articlesList
-			h3
-				a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/')!= article.title
-			!{article.summary}
+			article
+				h3
+					a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/')!= article.title
+				!{article.summary}

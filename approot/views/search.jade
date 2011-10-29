@@ -1,8 +1,15 @@
 
-include partials/searchForm
+section
+	include partials/searchForm
 
 div#searchResults
 
-	include partials/articleListSummary
+	section
+		div#articleListSummary.page-header
+			h2 Articles
+		include partials/articleListSummary
 
-	include partials/photoListSummary
+	section
+		div#photosListSummary.page-header
+			h2 Photos
+		include partials/photoListSummary
