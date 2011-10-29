@@ -1,23 +1,30 @@
 
-- email = '<a href="mailto:&#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;" title="Email"> email - &#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;</a>';
-
-style
-	#contact img {
-		width : 300px;
-		padding : 10px 20px 10px 0px;
-	}
+- email = '<a href="mailto:&#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;" title="Email"> Email - &#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;</a>';
 
 include partials/searchForm
 
 div.page-header
 	h2 Contact
 
-div#contact
-	p
-		img.flt-left(src="/i/no-contact-forms.gif", title="No need for contact form")
+div#contact.row
 
-		h3 Whaaa?
+	div.span-two-thirds
 
-		span You dont really need a contact form, do you? Cuh'mon, its 2011; everyone has a Gmail, Hotmail or Yahoo account. Look - here is my email address <a href="mailto:&#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;" title="Email">&#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;</a>. Click or copy and paste into your favorite browser.
+		p You dont really need a contact form, do you? Cuh'mon, its 2011; everyone has a Gmail, Hotmail or Yahoo account. Look - here is my email address <a href="mailto:&#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;" title="Email">&#97;&#110;&#100;&#114;&#101;&#119;&#64;&#109;&#97;&#117;&#114;&#101;&#114;&#46;&#109;&#101;</a>. Click or copy and paste into your favorite browser.
 
-div.row
+
+	div.span-one-third
+		h5 My Digits
+		ul.unstyled
+			li 100111100001001100010001100100011
+			li 13C262323
+		
+		h5 Electronic Mail
+		ul.unstyled
+			li!=email
+			li
+				a(href="http://www.coderwall.com/amaurer", title="Andrew Maurer on Coder Wall") CoderWall - amaurer
+			li
+				a(href="http://www.twitter.com/maurerdotme", title="Maurerdotme on Twitter") Twitter - @maurerdotme
+			li
+				a(href="http://github.com/amaurer", title="Andrew Maurer on Github") Github - amaurer

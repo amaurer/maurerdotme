@@ -8,4 +8,7 @@ div#articleListSummaryResults
 			article
 				h3
 					a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/')!= article.title
+				div.flt-right
+					small
+						#{new Date((article.createdDateTime * 1000) - 60000).toString().substr(0, 15)}
 				!{article.summary}

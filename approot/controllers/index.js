@@ -42,7 +42,7 @@ exports.init = function(app, async, articleModel, flickrModel, twitterModel){
 					i = 0;
 
 				// Collect Data
-				var arts = articleModel.getArticles('title', true),
+				var arts = articleModel.getArticles('date', false),
 					photos = data.flickrPhotos,
 					tweets = data.twitterLatest;
 
