@@ -2,7 +2,7 @@
 	"name" : "maurerdotme",
 	"decription" : "Personal Site",
 	"author" : "Andrew Maurer - AMAURER",
-	"version" : "0.1.1",
+	"version" : "0.1.3",
 	"bugs" : "Andrew Maurer <amaurer@maurer.me>",
 	"engines" : {
 		"node" : "0.4.10"

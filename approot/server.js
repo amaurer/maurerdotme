@@ -14,40 +14,41 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 // Setup
-var customSettings = require(__dirname + '/customSettings.js'),
+var dir = process.env.directory;
+var customSettings = require('./customSettings.js'),
 	express = require('express'),
 	app = express.createServer(),
 	async = require('async');
 
 // Model
-var articles = require(__dirname + '/model/articles.js')
-		.init(__dirname + '/articles/', 'md'),
-	flickr = require(__dirname + '/model/flickr.js')
+var articles = require('./model/articles.js')
+		.init('./articles/', 'md'),
+	flickr = require('./model/flickr.js')
 		.init(customSettings.flickr.api_key, customSettings.flickr.user_id),
-	twitter = require(__dirname + '/model/twitter.js')
+	twitter = require('./model/twitter.js')
 		.init(customSettings.twitter.account_name);
 
 // Helpers
 	require('./helpers/decorators.js');
 
 	app.configure(function(){
-		app.set('views', __dirname + '/views');
+		app.set('views', './views');
 		app.set('view engine', 'jade');
 		app.use(express.methodOverride());
 		app.use(express.bodyParser());
 		app.use(app.router);
-		app.use(express.static(__dirname + '/assets'));
+		app.use(express.static('./assets'));
 		//app.use(express.static(__dirname + '/assets', { maxAge: 31557600000 }));
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
 
-	app.listen(8080);
-/*
 var cluster = require('cluster');
 	cluster(app)
 		.set('workers', 4)
-		//.use(cluster.debug())
 		.listen(8080);
+/*
+		//.use(cluster.debug())
+	app.listen(8080);
 */
 	
 	/* Include the Controllers */
