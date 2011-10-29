@@ -10,18 +10,24 @@ html
 	head
 		title= "Andrew Maurer - Sr. Web Developer" + title
 		link(href="//twitter.github.com/bootstrap/1.3.0/bootstrap.min.css", rel="stylesheet", type="text/css")
-		link(href="http://fonts.googleapis.com/css?family=Andika", rel="stylesheet", type="text/css")
+		link(href="http://fonts.googleapis.com/css?family=Coda", rel="stylesheet", type="text/css")
+		link(href="http://fonts.googleapis.com/css?family=Marck+Script", rel="stylesheet", type="text/css")
 		link(href="/c/style.css", rel="stylesheet", type="text/css")
 		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js")
 		//script(src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js")
 
 	body
 
-		include ../partials/header
+		header
 
-		div#wrapper.container
+			include ../partials/header
+				
 
-			div.content
-				!{body}
+		content
+		
+			div#wrapper.container
+			
+				div.content
+					!{body}
 
-			include ../partials/footer
+				include ../partials/footer

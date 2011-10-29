@@ -7,9 +7,11 @@ div.topbar
 	div.topbar-inner
 
 		div.container
+			
+			div.brand
 
-			h3
-				a(href="/", title="Home - Pictures, JavaScript, ColdFusion, Node.js, CSS, Jade, Less") Andrew Maurer
+				h3
+					a(href="/", title="Home - Pictures, JavaScript, ColdFusion, Node.js, CSS, Jade, Less") Andrew Maurer
 
 			ul.nav
 
@@ -27,8 +29,3 @@ div.topbar
 
 				li(class=( page === 'contact' )? 'active' : '')
 					a(href="/contact/", title="How to contact the Web Developer - Andrew Maurer") Contact          
-			
-			form.pull-left( action="/search/", method="POST")
-				input#search(name="search", type="text")
-				&nbsp;
-				input#search-button.btn.primary(type="submit", value="Search")
