@@ -179,7 +179,7 @@ exports.getArticleByID = function(requestedID){
 // Filters articles on title and body
 exports.search = function(phrase){
 
-	var re = RegExp(phrase + '*?', 'gi');
+	var re = RegExp('(' + phrase + ')*?', 'gi');
 
 	return articles.filter(function(x){
 		return (x.title.search(re) !== -1 || x.rawBody.search(re) !== -1);
