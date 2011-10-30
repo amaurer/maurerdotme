@@ -7,7 +7,7 @@ exports.init = function(app, articlesModel){
 		// Get title data?
 		res.render('articleDetails', {
 			layout : 'layouts/single_col_full',
-			title : 'Details about ' + articlesData.title,
+			title : articlesData.title,
 			page : 'articles',
 			article : articlesData
 		});
