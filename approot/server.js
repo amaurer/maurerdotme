@@ -38,8 +38,8 @@ var articles = require('./model/articles.js')
 		app.use(express.methodOverride());
 		app.use(express.bodyParser());
 		app.use(app.router);
-		app.use(express.static('./assets'));
-		//app.use(express.static(__dirname + '/assets', { maxAge: 31557600000 }));
+		//app.use(express.static('./assets'));
+		app.use(express.static('./assets', { maxAge: 604800000 })); // One week
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
 

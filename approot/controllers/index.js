@@ -73,6 +73,7 @@ exports.init = function(app, async, articleModel, flickrModel, twitterModel){
 					};
 				};
 
+				// TODO : Cache these
 				sortedTags = articleModel.getTags().concat(data.flickrTags).sort(sortTags);
 
 				// Render
