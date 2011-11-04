@@ -1,8 +1,8 @@
 /***
 title=Cachet - JavaScript Object Caching at your fingers!
-createdDateTime=1320109191
+createdDateTime=1320419326
 author=Andrew Maurer
-uid=2011103101
+uid=2011110401
 summary=I've created a caching module for Node.js, jQuery and JavaScript. Its easy to use and extremely simple.
 */
 
@@ -22,6 +22,7 @@ I've recently written this site to consumer values from the Flickr API. I wanted
 
 	var cachet = require("cachet");
 	var myComplexObject;
+	var myReturnedCachedObjectWithNameExpirationAndValue;
 
 	/* Check every one minute */
 	setInterval(function(){
@@ -36,11 +37,16 @@ I've recently written this site to consumer values from the Flickr API. I wanted
 			/* Set expires in 2 minutes 30 seconds */
 			cachet.setCache("andrewTest", myComplexObject, new Date().getTime() + 150000);
 
+			/*
+			Expiration time can be an integer as well. It is translated into hours
+			cachet.setCache("andrewTest", myComplexObject, 1.5);
+			*/
+
 		};
 
-		myComplexObject = cachet.getCache("andrewTest");
+		myReturnedCachedObjectWithNameExpirationAndValue = cachet.getCache("andrewTest");
 
-		console.log(myComplexObject);
+		console.log(myReturnedCachedObjectWithNameExpirationAndValue);
 
 	}, 60000); 
 
