@@ -44,7 +44,7 @@ var articles = require('./model/articles.js')
 	});
 
 	cluster(app)
-		.set('workers', 4)
+		.set('workers', 2)
 		.listen(8080);
 /*
 		//.use(cluster.debug())
