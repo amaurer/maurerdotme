@@ -9,7 +9,8 @@ summary=I've created a caching module for Node.js, jQuery and JavaScript. Its ea
 ###What is it?
 A small collection of functions (get, set, is) that maintains name/value pairs for a duration of time. For each name/value stored, you can set an expiration date/time or pass in a float value that represents the duration of hours until expiration.
 
-###[Cachet](http://github.com/amaurer/Cachet "Cachet - A simple way to maintain objects with an expiration duration")
+###[Cachet on Github](http://github.com/amaurer/Cachet "Cachet - A simple way to maintain objects with an expiration duration")
+###[Cachet on NPM Listing](http://search.npmjs.org/#/cachet "Cachet - A simple way to maintain objects with an expiration duration")
 
 ###What what programming languages can I use it in?
 Currently it is written for Node.js but I do have plans to create more versions of it in other languages.
