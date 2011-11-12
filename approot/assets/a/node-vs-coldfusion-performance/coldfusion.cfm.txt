@@ -1,0 +1,6 @@
+<cfquery name="inserttets" datasource="mycooldatasource">
+INSERT INTO inserttest (created)
+VALUES (#now()#);
+</cfquery>
+
+DONE!

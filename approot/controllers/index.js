@@ -16,6 +16,7 @@ exports.init = function(app, async, articleModel, flickrModel, twitterModel){
 	};
 	
 	app.get('/', function(req, res){
+		
 		async.parallel({
 				flickrPhotos : function(cb){
 					flickrModel.photos.search(function(e, data){

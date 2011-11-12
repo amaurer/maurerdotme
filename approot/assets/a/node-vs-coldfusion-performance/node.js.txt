@@ -1,0 +1,28 @@
+var express = require('express');
+var app = express.createServer();
+var cluster = require('cluster');
+var datetime = require('datetime');
+var mysql = require('mysql');
+var client = mysql.createClient({
+	user: 'memyselfandi',
+	password: 'youdontcareaboutthis',
+	database: 'whatareyoulookingat'
+});
+
+app.get('/', function(req, res){
+	
+	var d = datetime.format(new Date(), "%Y-%m-%d %T");
+
+	client.query("INSERT INTO inserttest SET created= ?", [d], function(err) {
+		if (err) {
+			res.writeHead(500, {'Content-Type': 'text/plain'});
+			res.end('DUDE SUX!');
+			throw err;
+		}
+		res.send("DONE!");
+	});
+});
+
+cluster(app)
+	.set('workers', 8)
+	.listen(8080);
