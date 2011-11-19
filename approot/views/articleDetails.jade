@@ -1,8 +1,15 @@
-div#articleDetails.page-header
 
-	h2!= article.title + " "
-		br
-		small
-			#{new Date((article.createdDateTime * 1000) - 60000)}
+- var articleDate = datetime.format(new Date(article.createdDateTime), "%m/%d/%Y %r");
 
-div#articleDetailsBody!= article.body
+section
+	include partials/searchForm
+	
+section
+	div#articleDetails.page-header
+
+		h2!= article.title + " "
+			br
+			small
+				#{articleDate}
+
+	div#articleDetailsBody!= article.body

@@ -1,6 +1,6 @@
 /***
 title=Begin using JMeter for your testing!
-createdDateTime=1320420795
+createdDateTime=1320420795000
 author=Andrew Maurer
 uid=2011110402
 summary=Start using JMeter after reading this short tutorial. JMeter is an extremely powerful regression and performance engine.

@@ -1,6 +1,6 @@
 /***
 title=Node.js, ODBC and MSSQL Connection
-createdDateTime=1321113481
+createdDateTime=1321113481000
 author=Andrew Maurer
 uid=2011111201
 summary=I Finally got Nodejs connected to MSSQL via unixODBC and FreeTDS. It wasn't simple so here are my lessions learned

@@ -1,5 +1,8 @@
 
-include partials/searchForm
+- var articleDate;
+
+section
+	include partials/searchForm
 
 div#article.page-header
 	h2 Articles
@@ -10,8 +13,11 @@ div#articleResults
 			small Zero Results
 	- else
 		- each article, art in articlesList
-			h3
+			- articleDate = datetime.format(new Date(article.createdDateTime), "%m/%d/%Y %r");
+			h2
 				a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/')!= article.title
+			h4.flt-right
+				small!= articleDate
 			!{article.body.substr(0, article.body.indexOf('</p>') + 6)}
 			p
 				a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/') Read more...

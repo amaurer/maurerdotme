@@ -1,6 +1,6 @@
 /***
 title=Hold on to your Butts!
-createdDateTime=1319887393
+createdDateTime=1319887393000
 author=Andrew Maurer
 uid=2011102901
 summary=My first post on my new blog/photo gallery at maurer.me. I hope this is the first of very many!

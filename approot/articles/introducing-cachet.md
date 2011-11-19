@@ -1,6 +1,6 @@
 /***
 title=Cachet - JavaScript Object Caching at your fingers!
-createdDateTime=1320419326
+createdDateTime=1320419326000
 author=Andrew Maurer
 uid=2011110401
 summary=I've created a caching module for Node.js, jQuery and JavaScript. Its easy to use and extremely simple.

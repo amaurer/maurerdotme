@@ -87,6 +87,9 @@ exports.init = function(articleDirectory, fileExtension){
 		// If the user didn't set a time, set it to current so other crap doesn't break.
 		if(returnMetaObject.createdDateTime == null){
 			returnMetaObject.createdDateTime = new Date().getTime();
+		} else {
+			// Else multiply by 1000 to get
+			returnMetaObject.createdDateTime = Number(returnMetaObject.createdDateTime);
 		};
 
 		// Get the remainder of the file and pass to MarkDown for parsing.

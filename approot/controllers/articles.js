@@ -1,6 +1,6 @@
 
 
-exports.init = function(app, articlesModel){
+exports.init = function(app, articlesModel, datetime){
 
 	app.get('/articles/:articleTitle/:articleID', function(req, res){
 		var articlesData = articlesModel.getArticleByID(req.params.articleID);

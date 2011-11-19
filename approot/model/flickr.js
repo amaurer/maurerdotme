@@ -132,11 +132,17 @@ var api = {
 		},
 		getInfo : function(photo_id, callback){
 			requestInterface(new RequestObject('flickr.photos.getInfo', {photo_id : photo_id}), callback);
+		},
+		getList : function(params, callback){
+			requestInterface(new RequestObject('flickr.photos.getList'), callback);
 		}
 	},
 	tags : {
 		getListUserPopular : function(callback){
 			requestInterface(new RequestObject('flickr.tags.getListUserPopular'), callback);
+		},
+		getListUser : function(callback){
+			requestInterface(new RequestObject('flickr.tags.getListUser'), callback);
 		}
 	}
 

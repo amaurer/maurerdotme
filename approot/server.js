@@ -13,6 +13,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+
 // Setup
 var dir = process.env.directory;
 var customSettings = require('./customSettings.js'),
@@ -20,6 +21,7 @@ var customSettings = require('./customSettings.js'),
 	app = express.createServer(),
 	async = require('async'),
 	cluster = require('cluster');
+
 
 // Model
 var articles = require('./model/articles.js')
@@ -29,9 +31,22 @@ var articles = require('./model/articles.js')
 	twitter = require('./model/twitter.js')
 		.init(customSettings.twitter.account_name);
 
+
 // Helpers
 	require('./helpers/decorators.js');
+	global.datetime = require('datetime');
 
+	
+// Controllers
+	require('./controllers/index.js').init(app, async, articles, flickr, twitter);
+	require('./controllers/articles.js').init(app, articles);
+	require('./controllers/photos.js').init(app, async, flickr);
+	require('./controllers/search.js').init(app, async, articles, flickr);
+	require('./controllers/profile.js').init(app);
+	require('./controllers/contact.js').init(app);
+
+   
+// Configure and Serve
 	app.configure(function(){
 		app.set('views', './views');
 		app.set('view engine', 'jade');
@@ -42,19 +57,7 @@ var articles = require('./model/articles.js')
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
 
+
 	cluster(app)
 		.set('workers', 2)
 		.listen(8080);
-/*
-		//.use(cluster.debug())
-	app.listen(8080);
-*/
-	
-	/* Include the Controllers */
-	require('./controllers/index.js').init(app, async, articles, flickr, twitter);
-	require('./controllers/articles.js').init(app, articles);
-	require('./controllers/photos.js').init(app, async, flickr);
-	require('./controllers/search.js').init(app, async, articles, flickr);
-	require('./controllers/profile.js').init(app);
-	require('./controllers/contact.js').init(app);
-   

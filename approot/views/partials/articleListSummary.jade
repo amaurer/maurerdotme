@@ -1,4 +1,6 @@
 
+- var articleDate;
+
 div#articleListSummaryResults
 	- if(articlesList.length === 0)
 		p
@@ -10,5 +12,6 @@ div#articleListSummaryResults
 					a(href='/articles/' + article.title.toFolderNameSafe() + '/' + article.uid + '/')!= article.title
 				div.flt-right
 					small
-						#{new Date((article.createdDateTime * 1000) - 60000).toString().substr(0, 15)}
+						- articleDate = datetime.format(new Date(article.createdDateTime), "%m/%d/%Y %r");
+						#{articleDate}
 				!{article.summary}
