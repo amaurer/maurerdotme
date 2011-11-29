@@ -16,7 +16,7 @@ In researching connecting Nodejs to MSSQL I found only a couple of solutions.
 I chose the first one to begin with. I got it "talking" to the MSSQL server but it kept bombing because of buffer errors. The code was using deprecated buffer functions. I changed the source to use the new API. After doing so, I couldn't authenticate with the server. After a couple of hours of failing, I decided to abandon it too.
 
 ###Solution
-Plan B was to fall back to a (potentially) slower solution and that is ODBC. I was able to download the source and execute it. Now the learning curve was to figure out how to setup a ODBC connection on Ubuntu. [This post](http://lambie.org/2008/02/28/connecting-to-an-mssql-database-from-ruby-on-ubuntu/ "Ubuntu ODBC connect to MSSQL") was a big help configuring the ODBC connections with FreeTDS on Ubuntu. Couple of things I did differently, I didn't put my connection settings in the FreeTDS file but rather, I added it to the /etc/odbc.ini and /etc/odbcinst.ini files as shown below.
+Plan B was to fall back to a (potentially) slower solution and that is ODBC. I was able to download the source and execute it. Now the learning curve was to figure out how to setup a ODBC connection on Ubuntu. [This post](http://lambie.org/2008/02/28/connecting-to-an-mssql-database-from-ruby-on-ubuntu/ "Ubuntu ODBC connect to MSSQL") was a big help configuring the ODBC connections with FreeTDS on Ubuntu. Couple of things I did differently, I didn't put my connection settings in the FreeTDS file but rather, I added it to the `/etc/odbc.ini` and `/etc/odbcinst.ini` files as shown below.
 
 #####/etc/odbc.ini File
 
@@ -69,5 +69,44 @@ What is interesting here is that Node responded to all the of requests quickly b
 -----------------------------
 
 #####Nodejs Code
-Email me if you really want the code, but its simple.
-![Nodejs Sublime Text 2 ODBC MSSQL](/a/nodejs-unixodbc-freetds-mssql/i/nodejs-code-odbc.jpg)
+
+	
+	var odbc = require("odbc");
+	var connectionString = "DSN=probrems;UID=noneOfYourBeesWax;PWD=noneOfYourBeesWax;DATABASE=andrew";
+	var db = new odbc.Database();
+		db.open(connectionString, function(err){
+
+			if(err){
+				throw err;
+			};
+
+			/*
+				Once the connection is open you can query it.
+				That means if you tried to query it outside or before this handler finished, it would say...
+				"Connection Not Open"
+			*/
+
+			db.query("SELECT * FROM andrew.dbo.probremTypes;", function(err, rows, moreResultSets){
+				if(err){
+					console.log(err.message);
+				};
+				console.log(rows);
+			});
+
+		});
+
+	process.on('SIGINT', function () {
+		db.close(function(){
+			console.log('Database Connection Closed');
+			process.exit();
+		});
+	});
+
+####Connection Not Available
+`db.open` is a function that takes the connection string and a callback as arguments. Its important to remember that the database connection isn't available until that callback is executed. Below I show what does work and what doesn't.
+
+#####Success
+![Nodejs UnixODBC Works inside of Callback](/a/nodejs-unixodbc-freetds-mssql/i/nodejs-odbc-freetds-success-inside-of-handler.jpg)
+
+#####Failure
+![Nodejs UnixODBC Failed Connection Not Open](/a/nodejs-unixodbc-freetds-mssql/i/nodejs-odbc-freetds-failed-outside-of-handler.jpg)
