@@ -22,6 +22,16 @@ var customSettings = require('./customSettings.js'),
 	async = require('async'),
 	cluster = require('cluster');
 
+// Configure and Serve
+	app.configure(function(){
+		app.set('views', './views');
+		app.set('view engine', 'jade');
+		app.use(express.bodyParser());
+		app.use(express.methodOverride());
+		app.use(app.router);
+		app.use(express.static('./assets', { maxAge: 604800000 })); // One week
+		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+	});
 
 // Model
 var articles = require('./model/articles.js')
@@ -44,18 +54,6 @@ var articles = require('./model/articles.js')
 	require('./controllers/search.js').init(app, async, articles, flickr);
 	require('./controllers/profile.js').init(app);
 	require('./controllers/contact.js').init(app);
-
-   
-// Configure and Serve
-	app.configure(function(){
-		app.set('views', './views');
-		app.set('view engine', 'jade');
-		app.use(express.methodOverride());
-		app.use(express.bodyParser());
-		app.use(app.router);
-		app.use(express.static('./assets', { maxAge: 604800000 })); // One week
-		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-	});
 
 
 	cluster(app)
