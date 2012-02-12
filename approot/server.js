@@ -13,49 +13,17 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+var cluster = require('cluster');
 
-// Setup
-var dir = process.env.directory;
-var customSettings = require('./customSettings.js'),
-	express = require('express'),
-	app = express.createServer(),
-	async = require('async'),
-	cluster = require('cluster');
+if (cluster.isMaster) {
 
-// Configure and Serve
-	app.configure(function(){
-		app.set('views', './views');
-		app.set('view engine', 'jade');
-		app.use(express.bodyParser());
-		app.use(express.methodOverride());
-		app.use(app.router);
-		app.use(express.static('./assets', { maxAge: 604800000 })); // One week
-		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-	});
+	// Fork workers.
+	for (var i = 0; i < 2; i++) {
+		cluster.fork();
+	};
 
-// Model
-var articles = require('./model/articles.js')
-		.init('./articles/', 'md'),
-	flickr = require('./model/flickr.js')
-		.init(customSettings.flickr.api_key, customSettings.flickr.user_id),
-	twitter = require('./model/twitter.js')
-		.init(customSettings.twitter.account_name);
+} else {
 
+	require("./site.js");
 
-// Helpers
-	require('./helpers/decorators.js');
-	global.datetime = require('datetime');
-
-	
-// Controllers
-	require('./controllers/index.js').init(app, async, articles, flickr, twitter);
-	require('./controllers/articles.js').init(app, articles);
-	require('./controllers/photos.js').init(app, async, flickr);
-	require('./controllers/search.js').init(app, async, articles, flickr);
-	require('./controllers/profile.js').init(app);
-	require('./controllers/contact.js').init(app);
-
-
-	cluster(app)
-		.set('workers', 2)
-		.listen(8080);
+}
